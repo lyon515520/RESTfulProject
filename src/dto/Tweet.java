@@ -2,19 +2,32 @@ package dto;
 
 public class Tweet {
 	
+	private int id_tweet;
 	private int id_user;
 	private String message;
 	private String date;
 	/**
+	 * @return the id_tweet
+	 */
+	public int getTweetId() {
+		return id_tweet;
+	}
+	/**
+	 * @param id_tweet the id_tweet to set
+	 */
+	public void setTweetId(int id_tweet) {
+		this.id_tweet = id_tweet;
+	}
+	/**
 	 * @return the id_user
 	 */
-	public int getId() {
+	public int getUserId() {
 		return id_user;
 	}
 	/**
 	 * @param id_user the id_user to set
 	 */
-	public void setId(int id_user) {
+	public void setUserId(int id_user) {
 		this.id_user = id_user;
 	}
 	/**
