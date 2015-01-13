@@ -1,5 +1,6 @@
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,9 +11,11 @@ import java.util.List;
 import dto.Tweet;
 import dto.User;
 
+import org.apache.log4j.Logger;
+
 
 public class DBHelper {
-	
+	static Logger log = Logger.getLogger(DBHelper.class);
 	
 	public static void updateData() throws Exception
 	{
@@ -95,7 +98,7 @@ public class DBHelper {
 				userObject.setNickname(" "+rset.getString("nickname"));
 				userObject.setJoindate(" "+rset.getString("joindate"));
 				userData.add(userObject);
-				//log.trace("found Book: "+userObject.toString());
+				log.trace("found Book: "+userObject.toString());
 			}			
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 
@@ -105,7 +108,7 @@ public class DBHelper {
 			try { if (ps != null) ps.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (connection != null) connection.close(); } catch(Exception e) { e.printStackTrace(); }
 		}
-		//log.info("found a total of "+result.size()+" book(s)"); 
+		log.info("found a total of "+userData.size()+" user(s)"); 
 		return userData;
 	}
 	
@@ -137,7 +140,7 @@ public class DBHelper {
 				tweetObjectAll.setMessage(" "+rset.getString("message"));
 				tweetObjectAll.setDate(" "+rset.getString("date"));
 				tweetDataAll.add(tweetObjectAll);
-				//log.trace("found Book: "+userObject.toString());
+				log.trace("found Book: "+tweetObjectAll.toString());
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 
@@ -147,6 +150,7 @@ public class DBHelper {
 			try { if (ps != null) ps.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (connection != null) connection.close(); } catch(Exception e) { e.printStackTrace(); }
 		}
+		log.info("found a total of "+tweetDataAll.size()+" tweet(s)"); 
 		return tweetDataAll;
 	}
 	
@@ -166,15 +170,17 @@ public class DBHelper {
 		
 		try
 		{
-			ps = connection.prepareStatement("SELECT message FROM tweet WHERE id_user = '"+id_user+"'");
+			ps = connection.prepareStatement("SELECT id_tweet,id_user,message FROM tweet WHERE id_user = '"+id_user+"'");
 			rset = ps.executeQuery();
 			
 			// analyze results
 			while(rset.next()){
 				Tweet tweetObject = new Tweet();
+				tweetObject.setTweetId(rset.getInt("id_tweet"));
+				tweetObject.setUserId(rset.getInt("id_user"));
 				tweetObject.setMessage(rset.getString("message"));
 				tweetData.add(tweetObject);
-				//log.trace("found Book: "+userObject.toString());
+				log.trace("found Book: "+tweetObject.toString());
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 
@@ -184,6 +190,8 @@ public class DBHelper {
 			try { if (ps != null) ps.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (connection != null) connection.close(); } catch(Exception e) { e.printStackTrace(); }
 		}
+		
+		log.info("found a total of "+tweetData.size()+" tweet(s)"); 
 		return tweetData;
 		
 	}
