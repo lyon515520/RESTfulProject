@@ -99,17 +99,20 @@ public class DBHelper {
 				userObject.setJoindate(" "+rset.getString("joindate"));
 				userData.add(userObject);
 				log.trace("found Book: "+userObject.toString());
-			}			
+			}
+			
+			log.info("found a total of "+userData.size()+" user(s)"); 
+			return userData;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 
-			e.printStackTrace(); 
-		} finally{
+			//e.printStackTrace();
+			throw e;
+		} /*finally{
 			try { if (rset != null) rset.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (ps != null) ps.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (connection != null) connection.close(); } catch(Exception e) { e.printStackTrace(); }
-		}
-		log.info("found a total of "+userData.size()+" user(s)"); 
-		return userData;
+		}*/
+		
 	}
 	
 	public static List<Tweet> getAllTweet() throws Exception
@@ -140,7 +143,7 @@ public class DBHelper {
 				tweetObjectAll.setMessage(" "+rset.getString("message"));
 				tweetObjectAll.setDate(" "+rset.getString("date"));
 				tweetDataAll.add(tweetObjectAll);
-				log.trace("found Book: "+tweetObjectAll.toString());
+				log.trace("found Tweet: "+tweetObjectAll.toString());
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 
@@ -170,7 +173,7 @@ public class DBHelper {
 		
 		try
 		{
-			ps = connection.prepareStatement("SELECT id_tweet,id_user,message FROM tweet WHERE id_user = '"+id_user+"'");
+			ps = connection.prepareStatement("SELECT * FROM tweet WHERE id_user = '"+id_user+"'");
 			rset = ps.executeQuery();
 			
 			// analyze results
@@ -179,8 +182,9 @@ public class DBHelper {
 				tweetObject.setTweetId(rset.getInt("id_tweet"));
 				tweetObject.setUserId(rset.getInt("id_user"));
 				tweetObject.setMessage(rset.getString("message"));
+				tweetObject.setDate(rset.getString("date"));
 				tweetData.add(tweetObject);
-				log.trace("found Book: "+tweetObject.toString());
+				log.trace("found Tweet: "+tweetObject.toString());
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block 

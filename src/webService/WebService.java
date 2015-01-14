@@ -3,12 +3,12 @@ package webService;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-
-import com.google.gson.Gson;
+import javax.ws.rs.core.MediaType;
 
 import dao.DBHelper;
 import dto.User;
@@ -17,76 +17,51 @@ import dto.Tweet;
 @Path("/WebService")
 public class WebService {
 	
-	@GET
-	@Path("/GetUser")
+	/*@POST
+	@Path("/test")
 	@Produces("application/json")
-	public String user() throws Exception{
+	public void update() throws Exception  {
 		
-		try 
-		{	
-			List<User> userData = null;
-			DBHelper.updateData();
-			userData = DBHelper.getUser();
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(userData));
-			
-		} catch (Exception e)
-		{
+		try {
+			//DBHelper.updateData();
+			System.out.println("test is oki");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			throw e;
+			
 		}
-		return null;
-	}
-	/*
-	@GET
-	@Path("/GetUser")
-	@Produces("application/json")
-	public void user() throws Exception {
 		
-		DBHelper.updateData();
-		System.out.println(DBHelper.getUser());
 	}
 	*/
 	
 	@GET
-	@Path("/GetAllTweet")
-	@Produces("application/json")
-	public String allTweet() throws Exception{
+	@Path("GetUser")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<User> user() throws Exception {
 		
-		try 
-		{	
-			List<Tweet> allTweet = null;
-			DBHelper.updateData();
-			allTweet = DBHelper.getAllTweet();
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(allTweet));
-			
-		} catch (Exception e)
-		{
-			throw e;
-		}
-		return null;
+		DBHelper.updateData();
+	    return DBHelper.getUser();
 	}
 	
 	@GET
-	@Path("/GetTweet/{id_user}")
-	@Produces("application/json")
-	public String tweet(@PathParam("id_user")long id_user) throws Exception{
+	@Path("/GetAllTweet")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Tweet> allTweet() throws Exception{
 		
-		try 
-		{
-			List<Tweet> tweetData = null;
 			DBHelper.updateData();
-			tweetData = DBHelper.getTweet(id_user);
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(tweetData));
-
-		} catch (Exception e)
-		{
-			throw e;
-		}
-		return null;
+			return DBHelper.getAllTweet();
 	}
 	
+	
+	@GET
+	@Path("/GetTweet/{id_user}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Tweet> tweet(@PathParam("id_user")long id_user) throws Exception{
+		
+		DBHelper.updateData();
+		return DBHelper.getTweet(id_user);
+		
+	}
 	
 
 }
