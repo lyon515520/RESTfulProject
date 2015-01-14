@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
@@ -15,7 +16,6 @@ import dto.Tweet;
 
 @Path("/WebService")
 public class WebService {
-	
 	
 	@GET
 	@Path("/GetUser")
@@ -36,6 +36,16 @@ public class WebService {
 		}
 		return null;
 	}
+	/*
+	@GET
+	@Path("/GetUser")
+	@Produces("application/json")
+	public void user() throws Exception {
+		
+		DBHelper.updateData();
+		System.out.println(DBHelper.getUser());
+	}
+	*/
 	
 	@GET
 	@Path("/GetAllTweet")
@@ -58,9 +68,9 @@ public class WebService {
 	}
 	
 	@GET
-	@Path("/GetTweet")
+	@Path("/GetTweet/{id_user}")
 	@Produces("application/json")
-	public String tweet(@QueryParam("id_user") long id_user) throws Exception{
+	public String tweet(@PathParam("id_user")long id_user) throws Exception{
 		
 		try 
 		{
