@@ -1,10 +1,6 @@
 package dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="user")
 public class User{
 	
 	private int id_user;
