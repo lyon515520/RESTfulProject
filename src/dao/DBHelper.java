@@ -62,8 +62,9 @@ public class DBHelper {
 		}
 		catch(Exception e)
 		{
-			//throw e;
-			System.out.println("something wrong in this part");
+			
+			throw e;
+			
 		}
 		
 	}
@@ -107,11 +108,11 @@ public class DBHelper {
 			// TODO Auto-generated catch block 
 			//e.printStackTrace();
 			throw e;
-		} /*finally{
+		} finally{
 			try { if (rset != null) rset.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (ps != null) ps.close(); } catch(Exception e) { e.printStackTrace(); }
 			try { if (connection != null) connection.close(); } catch(Exception e) { e.printStackTrace(); }
-		}*/
+		}
 		
 	}
 	
